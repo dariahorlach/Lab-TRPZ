@@ -1,16 +1,25 @@
 package proxy;
 
+import chain.PageContext;
+import chain.PageHandler;
+
 import java.util.*;
 
 public class PageFetcherProxy implements PageFetcher {
 
     private final PageFetcher realFetcher;
 
+    private PageHandler htmlProcessor;
+
     private final Queue<String> fetchQueue = new LinkedList<>();
     private final Map<String, String> localCache = new HashMap<>();
 
     public PageFetcherProxy(PageFetcher realFetcher) {
         this.realFetcher = realFetcher;
+    }
+
+    public void setHtmlProcessor(PageHandler processor) {
+        this.htmlProcessor = processor;
     }
 
     @Override
@@ -38,7 +47,15 @@ public class PageFetcherProxy implements PageFetcher {
             realFetcher.fetchPage(url);
 
             if (realFetcher.isPageFetched(url)) {
-                localCache.put(url, realFetcher.getPageContent(url));
+                String html = realFetcher.getPageContent(url);
+
+                if (htmlProcessor != null) {
+                    PageContext context = new PageContext(html, "example");
+                    htmlProcessor.handle(context);
+                    html = context.getHtmlContent();
+                }
+
+                localCache.put(url, html);
             }
         }
     }
