@@ -1,9 +1,9 @@
 package chain;
 
+import composite.HtmlLeaf;
 import memento.PageHistory;
 
 public class ScriptCleanerHandler extends AbstractPageHandler {
-
     public ScriptCleanerHandler(PageHistory history) {
         super(history);
     }
@@ -13,9 +13,9 @@ public class ScriptCleanerHandler extends AbstractPageHandler {
         saveState(context);
 
         System.out.println("Видаляємо <script> теги");
-        context.setHtmlContent(
-                context.getHtmlContent().replaceAll("<script.*?</script>", "")
-        );
+        String html = context.getHtmlContent();
+        html = html.replaceAll("<script.*?</script>", "");
+        context.setHtmlStructure(new HtmlLeaf(html));
 
         handleNext(context);
     }

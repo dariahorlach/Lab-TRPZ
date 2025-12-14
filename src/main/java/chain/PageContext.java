@@ -1,20 +1,27 @@
 package chain;
 
+import memento.PageHistory;
+import composite.*;
+
 public class PageContext {
-    private String htmlContent;
+    private HtmlComponent htmlStructure;
     private final String keyword;
 
     public PageContext(String htmlContent, String keyword) {
-        this.htmlContent = htmlContent;
         this.keyword = keyword;
+        this.htmlStructure = new HtmlLeaf(htmlContent);
+    }
+
+    public HtmlComponent getHtmlStructure() {
+        return htmlStructure;
+    }
+
+    public void setHtmlStructure(HtmlComponent htmlStructure) {
+        this.htmlStructure = htmlStructure;
     }
 
     public String getHtmlContent() {
-        return htmlContent;
-    }
-
-    public void setHtmlContent(String htmlContent) {
-        this.htmlContent = htmlContent;
+        return htmlStructure.render();
     }
 
     public String getKeyword() {
@@ -22,11 +29,11 @@ public class PageContext {
     }
 
     public Memento save() {
-        return new Memento(htmlContent);
+        return new Memento(getHtmlContent());
     }
 
     public void restore(Memento memento) {
-        this.htmlContent = memento.htmlContent;
+        this.htmlStructure = new HtmlLeaf(memento.getHtmlContent());
     }
 
     public static class Memento {

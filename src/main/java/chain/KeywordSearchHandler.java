@@ -3,7 +3,6 @@ package chain;
 import memento.PageHistory;
 
 public class KeywordSearchHandler extends AbstractPageHandler {
-
     public KeywordSearchHandler(PageHistory history) {
         super(history);
     }
@@ -11,8 +10,8 @@ public class KeywordSearchHandler extends AbstractPageHandler {
     @Override
     public void handle(PageContext context) {
         saveState(context);
-        System.out.println("Пошук ключового слова: " + context.getKeyword());
 
+        System.out.println("Пошук ключового слова: " + context.getKeyword());
         if (context.getHtmlContent().contains(context.getKeyword())) {
             System.out.println("Ключове слово знайдено!");
         } else {
