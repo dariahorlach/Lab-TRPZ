@@ -1,6 +1,12 @@
 package chain;
 
+import memento.PageHistory;
+
 public class KeywordSearchHandler extends AbstractPageHandler {
+
+    public KeywordSearchHandler(PageHistory history) {
+        super(history);
+    }
 
     @Override
     public void handle(PageContext context) {

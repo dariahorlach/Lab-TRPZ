@@ -4,15 +4,13 @@ import memento.PageHistory;
 
 public class ScriptCleanerHandler extends AbstractPageHandler {
 
-    private final PageHistory history;
-
     public ScriptCleanerHandler(PageHistory history) {
-        this.history = history;
+        super(history);
     }
 
     @Override
     public void handle(PageContext context) {
-        history.save(context.save());
+        saveState(context);
 
         System.out.println("Видаляємо <script> теги");
         context.setHtmlContent(

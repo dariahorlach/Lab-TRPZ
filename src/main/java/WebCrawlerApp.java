@@ -11,8 +11,8 @@ public class WebCrawlerApp {
 
         PageHandler chain =
                 new ScriptCleanerHandler(history)
-                        .setNext(new AdsCleanerHandler())
-                        .setNext(new KeywordSearchHandler());
+                        .setNext(new AdsCleanerHandler(history))
+                        .setNext(new KeywordSearchHandler(history));
 
 
         proxy.setHtmlProcessor(chain);
