@@ -1,7 +1,6 @@
 package chain;
 
 public class PageContext {
-
     private String htmlContent;
     private final String keyword;
 
@@ -20,5 +19,21 @@ public class PageContext {
 
     public String getKeyword() {
         return keyword;
+    }
+
+    public Memento save() {
+        return new Memento(htmlContent);
+    }
+
+    public void restore(Memento memento) {
+        this.htmlContent = memento.htmlContent;
+    }
+
+    public static class Memento {
+        private final String htmlContent;
+
+        private Memento(String htmlContent) {
+            this.htmlContent = htmlContent;
+        }
     }
 }
