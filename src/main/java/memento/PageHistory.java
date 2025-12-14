@@ -12,9 +12,15 @@ public class PageHistory {
     }
 
     public PageContext.Memento undo() {
-        if (!history.isEmpty()) {
-            return history.pop();
+        return history.isEmpty() ? null : history.pop();
+    }
+
+    public void printHistory() {
+        System.out.println("\n=== Історія HTML ===");
+        int step = 1;
+        for (PageContext.Memento m : history) {
+            System.out.println("Крок " + step + ": " + m.getHtmlContent());
+            step++;
         }
-        return null;
     }
 }

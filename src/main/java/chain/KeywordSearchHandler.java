@@ -10,6 +10,7 @@ public class KeywordSearchHandler extends AbstractPageHandler {
 
     @Override
     public void handle(PageContext context) {
+        saveState(context);
         System.out.println("Пошук ключового слова: " + context.getKeyword());
 
         if (context.getHtmlContent().contains(context.getKeyword())) {

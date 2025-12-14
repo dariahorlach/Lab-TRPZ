@@ -35,5 +35,9 @@ public class PageContext {
         private Memento(String htmlContent) {
             this.htmlContent = htmlContent;
         }
+
+        public String getHtmlContent() {
+            return htmlContent;
+        }
     }
 }

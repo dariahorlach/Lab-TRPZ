@@ -1,6 +1,7 @@
 import chain.*;
 import proxy.*;
 import memento.*;
+import template.*;
 
 public class WebCrawlerApp {
     public static void main(String[] args) {
@@ -9,17 +10,16 @@ public class WebCrawlerApp {
 
         PageHistory history = new PageHistory();
 
-        PageHandler chain =
-                new ScriptCleanerHandler(history)
-                        .setNext(new AdsCleanerHandler(history))
-                        .setNext(new KeywordSearchHandler(history));
+        ScriptCleanerHandler scriptHandler = new ScriptCleanerHandler(history);
+        AdsCleanerHandler adsHandler = new AdsCleanerHandler(history);
+        KeywordSearchHandler keywordHandler = new KeywordSearchHandler(history);
 
+        scriptHandler.setNext(adsHandler);
+            adsHandler.setNext(keywordHandler);
 
-        proxy.setHtmlProcessor(chain);
+        SimpleWebCrawler crawler = new SimpleWebCrawler(proxy, scriptHandler);
+        crawler.crawl("https://example.com");
 
-        proxy.fetchPage("https://example.com");
-        proxy.processBatch();
-
-        System.out.println(proxy.getPageContent("https://example.com"));
+        history.printHistory();
     }
 }

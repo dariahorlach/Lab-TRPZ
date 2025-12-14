@@ -10,12 +10,11 @@ public class HttpPageFetcher implements PageFetcher {
     @Override
     public void fetchPage(String url) {
         System.out.println("Завантаження сторінки " + url);
-        downloadedPages.put(url, "<html>Content of " + url + "</html>");
+        downloadedPages.put(url, "<html><script>console.log('ad');</script><div class=\"ads\">AD</div>Content of " + url + "</html>");
     }
 
     @Override
     public boolean isPageFetched(String url) {
-        System.out.println("Перевірка статусу сторінки " + url);
         return downloadedPages.containsKey(url);
     }
 
